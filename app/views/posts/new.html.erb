@@ -1,0 +1,13 @@
+<h1>New Post Generator</h1>
+
+<%= form_with model: Post.new do |form| %>
+    <%= form.text_field :title, placeholder: "Title" %>
+    <br> <br>
+    <%= form.text_area :body, placeholder: "Body...", :cols => 30, :rows => 10 %>
+    <%= submit_tag("Submit") %>
+  <% end %>
+
+<% @posts.each do |post| %>
+  <%= post.title %>
+  <%= post.body %>
+<% end %>
