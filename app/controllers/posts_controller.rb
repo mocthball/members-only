@@ -1,33 +1,32 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[new create]
+
+  def index
+    @posts = Post.all
+  end
 
   def new
     @post = Post.new
   end
 
   def create
-    if user_signed_in?
-      @post = Post.new(user_params)
+    @post = Post.new(post_params)
+    @post.user = current_user
 
-      if @post.save
-        redirect_to new_user_path
-      else
-        render :new, status: :unprocessable_entity
-      end
+    if @post.save
+      redirect_to posts_path
     else
-      render :new, status: :unprocessable_entity
+      render 'new'
     end
-  end
-
-  def index
-    @posts = Post.all
-    @post = Post.new
-    @users = User.all
   end
 
   private
 
-  def user_params
-    params.require(:user).permit(:title, :body)
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
+
+  def set_post
+    @post = Post.find(current_user.id)
   end
 end

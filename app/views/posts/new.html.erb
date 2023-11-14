@@ -6,8 +6,3 @@
     <%= form.text_area :body, placeholder: "Body...", :cols => 30, :rows => 10 %>
     <%= submit_tag("Submit") %>
   <% end %>
-
-<% @posts.each do |post| %>
-  <%= post.title %>
-  <%= post.body %>
-<% end %>

@@ -4,9 +4,19 @@
   <% @posts.reverse_each do |post| %>
   <div class="post">
     <% if user_signed_in? %>
-      <p class="author"><%= post.user.username %> said:</p>
+      <p class="author"><%= (User.find(post.user_id)).email%> said:</p>
     <% end %>
-    <p class="post-content"><%= post.content %></p>
+    <%= "Post id: " + post.id.to_s%>
+    <h2><p class="post-content"><%= post.title%></p></h2>
+    <p class="post-content"><%= post.body%></p>
   </div>
+  <% end %>
+  <br>
+  <% if user_signed_in? %>
+    <div> Welcome <%= current_user.email %> </div> 
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+  <% else %>
+    <%= link_to 'Register', new_user_registration_path %>
+    <%= button_to "Sign in", new_user_session_path %> 
   <% end %>
 </div>
